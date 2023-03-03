@@ -1,9 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
+const cors = require("cors");
 require("dotenv").config();
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -11,15 +13,6 @@ const transporter = nodemailer.createTransport({
     user: "its.me.om.k@gmail.com",
     pass: "uicrmhazpqcytzqd",
   },
-});
-
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", `${process.env.APP_URL}`); // update to match the domain you will make the request from
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
 });
 
 app.post("/send-email", async (req, res) => {
